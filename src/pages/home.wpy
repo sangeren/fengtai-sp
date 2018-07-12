@@ -11,7 +11,7 @@
       <view class="search_read_only">
         <navigator class="search_content" open-type="navigate" url="/pages/search">
           <i class="iconfont icon-search"></i>
-          <view class="search_input">搜索商品</view>
+          <view class="search_input">搜索1商品</view>
         </navigator>
         <navigator class="message" url="/pages/messages">
           <i class="iconfont icon-message cfff"></i>
