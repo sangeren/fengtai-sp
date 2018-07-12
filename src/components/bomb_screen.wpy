@@ -67,6 +67,7 @@ export default class bombScreen extends wepy.component {
   left: 50%;
   z-index: 2001;
   text-align: center;
+  display: none;
   &.dialog {
     .alert-content-box {
       width: 100%;
@@ -133,6 +134,7 @@ export default class bombScreen extends wepy.component {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+   display: none!important;
 }
 
 </style>

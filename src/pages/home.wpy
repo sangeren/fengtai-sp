@@ -21,20 +21,38 @@
     </view>
     <view class="nav_list">
       <navigator open-type="navigate" url="/pages/sign_in">
-        <image src="../images/icon_nav_01_new.png" class="nav_icon"></image>
-        <view class="nav_text">签到有礼</view>
+        <image src="../images/icon1.png" class="nav_icon"></image>
+        <view class="nav_text">新品抢先</view>
       </navigator>
       <navigator open-type="navigate" url="/pages/exchange_goods">
-        <image src="../images/icon_nav_02_new.png" class="nav_icon"></image>
-        <view class="nav_text">换货专区</view>
+        <image src="../images/icon2.png" class="nav_icon"></image>
+        <view class="nav_text">平价金银</view>
       </navigator>
       <navigator open-type="navigate" url="/pages/wholesale">
-        <image src="../images/icon_nav_03_new.png" class="nav_icon"></image>
-        <view class="nav_text">特价专区</view>
+        <image src="../images/icon3.png" class="nav_icon"></image>
+        <view class="nav_text">景宁畲银</view>
       </navigator>
       <navigator open-type="navigate" url="/pages/replenishment_goods">
-        <image src="../images/icon_nav_04_new.png" class="nav_icon"></image>
-        <view class="nav_text">我要补货</view>
+        <image src="../images/icon4.png" class="nav_icon"></image>
+        <view class="nav_text">会员专享</view>
+      </navigator>
+    </view>
+    <view class="nav_list">
+      <navigator open-type="navigate" url="/pages/sign_in">
+        <image src="../images/icon5.png" class="nav_icon"></image>
+        <view class="nav_text">人气热卖</view>
+      </navigator>
+      <navigator open-type="navigate" url="/pages/exchange_goods">
+        <image src="../images/icon6.png" class="nav_icon"></image>
+        <view class="nav_text">积分活动</view>
+      </navigator>
+      <navigator open-type="navigate" url="/pages/wholesale">
+        <image src="../images/icon7.png" class="nav_icon"></image>
+        <view class="nav_text">线下分店</view>
+      </navigator>
+      <navigator open-type="navigate" url="/pages/replenishment_goods">
+        <image src="../images/icon8.png" class="nav_icon"></image>
+        <view class="nav_text">分类</view>
       </navigator>
     </view>
     <!--发现好商品模块-->
@@ -57,7 +75,7 @@ import BottomLoadMore from "../components/common/bottomLoadMore"
 import Placeholder from "../components/common/placeholder"
 export default class Home extends wepy.page {
   config = {
-    navigationBarTitleText: '演示商城',
+    navigationBarTitleText: '首页',
   }
   components = {
     discover: Discover,
@@ -186,6 +204,7 @@ export default class Home extends wepy.page {
 <style lang="less">
 .swiper {
   height: 348rpx;
+  padding-top:77rpx;
 }
 
 .slide-image {
@@ -195,19 +214,19 @@ export default class Home extends wepy.page {
 
 .pos {
   position: absolute;
-  top: 0rpx;
+  top: 0;
   left: 0;
   right: 0;
+  background: #4d4643;
   .search_content {
-    background: rgba(0, 0, 0, 0.1);
     border: 1px solid #efefee;
     .icon-search,
     .search_input {
-      color: #efefee;
+      color: #666;
     }
   }
   .message {
-    display: block;
+    display: none;
     text-align: center;
     margin-left: 20rpx;
   }
