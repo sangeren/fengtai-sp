@@ -16,7 +16,7 @@
   </view>
   <view class="shop_list">
     <!--矩阵商品列表模块-->
-    <shopGridList :purchasetype.sync="purchasetype" :list.sync="list"></shopGridList>
+    <!-- <shopGridList :purchasetype.sync="purchasetype" :list.sync="list"></shopGridList> -->
     <!--加载更多时动画-->
     <bottomLoadMore :show.sync="showLoading" message="正在加载"></bottomLoadMore>
     <!--暂无数据显示-->

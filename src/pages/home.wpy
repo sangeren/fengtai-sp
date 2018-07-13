@@ -20,43 +20,22 @@
       </view>
     </view>
     <view class="nav_list">
-      <navigator open-type="navigate" url="/pages/sign_in">
-        <image src="../images/icon1.png" class="nav_icon"></image>
-        <view class="nav_text">新品抢先</view>
+      <navigator wx:for="{{navList}}" wx:key="key" open-type="navigate" url="{{item.Url}}">
+        <image src="{{adImagePath + item.Image}}" class="nav_icon"></image>
+        <view class="nav_text">{{item.ExtField1}}</view>
       </navigator>
-      <navigator open-type="navigate" url="/pages/exchange_goods">
-        <image src="../images/icon2.png" class="nav_icon"></image>
-        <view class="nav_text">平价金银</view>
-      </navigator>
-      <navigator open-type="navigate" url="/pages/wholesale">
-        <image src="../images/icon3.png" class="nav_icon"></image>
-        <view class="nav_text">景宁畲银</view>
-      </navigator>
-      <navigator open-type="navigate" url="/pages/replenishment_goods">
-        <image src="../images/icon4.png" class="nav_icon"></image>
-        <view class="nav_text">会员专享</view>
-      </navigator>
+     
     </view>
-    <view class="nav_list">
-      <navigator open-type="navigate" url="/pages/sign_in">
-        <image src="../images/icon5.png" class="nav_icon"></image>
-        <view class="nav_text">人气热卖</view>
-      </navigator>
-      <navigator open-type="navigate" url="/pages/exchange_goods">
-        <image src="../images/icon6.png" class="nav_icon"></image>
-        <view class="nav_text">积分活动</view>
-      </navigator>
-      <navigator open-type="navigate" url="/pages/wholesale">
-        <image src="../images/icon7.png" class="nav_icon"></image>
-        <view class="nav_text">线下分店</view>
-      </navigator>
-      <navigator open-type="navigate" url="/pages/replenishment_goods">
-        <image src="../images/icon8.png" class="nav_icon"></image>
-        <view class="nav_text">分类</view>
-      </navigator>
-    </view>
+   
     <!--发现好商品模块-->
+    <view class="w-title" style="margin:15rpx 0;">
+      <text class="title">优惠活动</text>
+    </view>
     <discover :list.sync="discoverList"></discover>
+    <view class="w-title">
+      <text class="title">推荐商品</text>
+    </view>
+    <shopGridList :purchasetype.sync="purchasetype" :list.sync="sList"></shopGridList>
     <!--加载更多时动画-->
     <bottomLoadMore :show.sync="showLoading" message="正在加载"></bottomLoadMore>
     <!--暂无数据显示-->
@@ -71,6 +50,7 @@ import api from "@/api/api";
 import tip from "@/utils/tip";
 import Discover from "@/components/discover";
 import Bombscreen from "@/components/bomb_screen";
+import ShopGridList from '@/components/shop_grid_list';
 import BottomLoadMore from "../components/common/bottomLoadMore";
 import Placeholder from "../components/common/placeholder";
 export default class Home extends wepy.page {
@@ -81,6 +61,7 @@ export default class Home extends wepy.page {
     discover: Discover,
     bottomLoadMore: BottomLoadMore,
     placeholder: Placeholder,
+    shopGridList: ShopGridList,
     bombscreen: Bombscreen
   };
   data = {
@@ -90,6 +71,7 @@ export default class Home extends wepy.page {
     duration: 1000,
     indicatorActiveColor: "#fff",
     discoverList: [],
+    sList:[],
     //是否有数据
     is_empty: false,
     //当前页面
@@ -102,35 +84,47 @@ export default class Home extends wepy.page {
     preventRepeatReuqest: false,
     //广告列表
     adList: [],
+     //分类列表
+    navList: [],
     tps: 0,
     is_show_alert: false,
     adImagePath: "http://192.168.1.139:8031/upload/adv/"
   };
-  async getDiscoverList(currentPage, size) {
-    let that = this;
-    const json = await api.getHomeDisvocerList({
+  async getDiscoverList() {
+    // let that = this;
+    // const json = await api.getHomeDisvocerList({
+    //   query: {
+    //     page: currentPage || 1,
+    //     size: size || 10
+    //   }
+    // });
+    // if (json.data.code == 0) {
+    //   that.discoverList = [...that.discoverList, ...json.data.list];
+
+    //   if (json.data.page_total) {
+    //     // 后台的数据不再返回page_total
+    //     that.page_total = json.data.page_total;
+    //   }
+    //   if (json.data.page_total == 0) {
+    //     //暂无数据
+    //     that.is_empty = true;
+    //   }
+    //   that.$apply();
+    // } else {
+    //   tip.error(json.data.msg);
+    // }
+    // that.showLoading = false;
+     const json = await api.getAdvertList({
       query: {
-        page: currentPage || 1,
-        size: size || 10
+        id: 50
       }
     });
-    if (json.data.code == 0) {
-      that.discoverList = [...that.discoverList, ...json.data.list];
-
-      if (json.data.page_total) {
-        // 后台的数据不再返回page_total
-        that.page_total = json.data.page_total;
-      }
-      if (json.data.page_total == 0) {
-        //暂无数据
-        that.is_empty = true;
-      }
-      that.$apply();
-    } else {
-      tip.error(json.data.msg);
-    }
-    that.showLoading = false;
+    this.discoverList = json.data;
+    this.$apply();
   }
+
+
+
   async getAdList() {
     const json = await api.getAdvertList({
       query: {
@@ -141,11 +135,33 @@ export default class Home extends wepy.page {
     this.adList = json.data;
     this.$apply();
   }
+  async getNavList() {
+    const json = await api.getAdvertList({
+      query: {
+        id: 34
+      }
+    });
+
+    this.navList = json.data;
+    this.$apply();
+  }
+  async getSList() {
+    const json = await api.getAdvertList({
+      query: {
+        id: 37
+      }
+    });
+    this.sList = json.data;
+    this.$apply();
+  }
+  
   onLoad() {
     let that = this;
     this.discoverList = [];
     that.getDiscoverList();
     this.getAdList();
+    this.getNavList();
+    this.getSList();
   }
   computed = {};
   methods = {
@@ -164,7 +180,7 @@ export default class Home extends wepy.page {
         console.log(res.target);
       }
       return {
-        title: "素洁服装厂",
+        title: "金大丰",
         path: "/pages/home",
         success: function(res) {
           // 转发成功
@@ -208,6 +224,9 @@ export default class Home extends wepy.page {
   height: 348rpx;
   // padding-top:77rpx;
 }
+.container {
+background: #f7f7f7;
+}
 
 .slide-image {
   width: 100%;
@@ -222,6 +241,7 @@ export default class Home extends wepy.page {
   // background: #4d4643;
   .search_content {
     border: 1px solid #efefee;
+    background:rgba(0,0,0,0.1);
     .icon-search,
     .search_input {
       color: #fff;
@@ -243,9 +263,13 @@ export default class Home extends wepy.page {
   display: flex;
   font-size: 26rpx;
   justify-content: space-between;
-  padding: 17rpx 50rpx;
+  padding: 17rpx 0rpx;
+  flex-wrap:wrap;
+  padding-bottom:0;
+  background:#fff;
   navigator {
     text-align: center;
+    width: 25%;
   }
   .nav_icon {
     height: 80rpx;
@@ -255,6 +279,7 @@ export default class Home extends wepy.page {
   }
   .nav_text {
     font-size: 26rpx;
+    margin-bottom: 16rpx;
   }
 }
 
