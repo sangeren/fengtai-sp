@@ -4,7 +4,13 @@ import {
 
 let env = "-test" //-dev 或者 -test
 const apiMall = 'https://sujiefs.com/'
+const apiService = 'http://192.168.1.139:8003/api/'
+
 // const apiMall = 'http://localhost:8080/'
+
+// 获取公告列表
+// 'http://192.168.1.139:8003/api/AdvertList/44'
+const getAdvertList = (params) => wxRequest(params, apiService + 'AdvertList/');
 
 /**
  * 获取发现好商品接口
@@ -145,6 +151,7 @@ const childGoodsCatetoryList = (params) => wxRequest(params, apiMall + '/api/mal
 const getAdList = (params) => wxRequest(params, apiMall + '/api/adverts/list');
 
 export default {
+  getAdvertList,
   hostGoodsList,
   getDiscoverList,
   getHomeDisvocerList,
